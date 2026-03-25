@@ -13,11 +13,15 @@ import { userRouter } from "./routes/user.routes";
 
 const app = express();
 
-const allowedOrigins = new Set(
-  [env.CLIENT_URL, "http://localhost:5173"].filter(
-    (value): value is string => Boolean(value)
-  )
-);
+const allowedOrigins = new Set<string>();
+
+if (env.CLIENT_URL) {
+  allowedOrigins.add(env.CLIENT_URL);
+}
+
+if (!isProduction) {
+  allowedOrigins.add("http://localhost:5173");
+}
 
 app.disable("x-powered-by");
 app.use(
