@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: users-crud-app
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run prisma:migrate:deploy && npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22.22.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: users-crud-db
+          property: connectionString
+
+databases:
+  - name: users-crud-db
+    plan: free
+    diskSizeGB: 1

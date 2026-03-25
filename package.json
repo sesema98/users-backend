@@ -1,0 +1,32 @@
+{
+  "name": "users-crud-render",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@10.9.0",
+  "engines": {
+    "node": ">=20 <23",
+    "npm": ">=10 <11"
+  },
+  "workspaces": [
+    "apps/server",
+    "apps/client"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @users/server\" \"npm run dev -w @users/client\"",
+    "build": "npm run prisma:generate && npm run build -w @users/server && npm run build -w @users/client",
+    "start": "npm run start -w @users/server",
+    "lint": "npm run lint --workspaces --if-present",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:status": "prisma migrate status",
+    "prisma:seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.7.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prisma": "^6.7.0",
+    "tsx": "^4.19.3"
+  }
+}
