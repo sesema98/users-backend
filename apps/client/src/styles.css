@@ -177,10 +177,8 @@ a {
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-  gap: 1.5rem;
-  padding: 2rem;
+  display: block;
+  padding: 1.6rem;
   border-radius: var(--radius-xl);
   background:
     linear-gradient(135deg, rgba(255, 250, 243, 0.9), rgba(255, 247, 236, 0.72)),
@@ -208,7 +206,6 @@ a {
 }
 
 .hero-copy-wrap,
-.hero-board,
 .table-wrap,
 .drawer form,
 .rail-panel {
@@ -218,8 +215,8 @@ a {
 .hero-copy-wrap {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 1.5rem;
+  gap: 0.9rem;
+  max-width: 760px;
 }
 
 .eyebrow-row,
@@ -287,15 +284,10 @@ a {
 }
 
 .hero h1 {
-  max-width: 12ch;
-  font-size: clamp(3rem, 6vw, 5.4rem);
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-}
-
-.hero h1 em {
-  font-style: normal;
-  color: var(--accent);
+  max-width: 14ch;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
 }
 
 .hero-copy,
@@ -366,100 +358,6 @@ a {
   color: var(--danger);
 }
 
-.hero-board {
-  padding: 1.4rem;
-  border-radius: calc(var(--radius-xl) - 10px);
-  background:
-    linear-gradient(160deg, rgba(14, 28, 39, 0.96), rgba(21, 56, 71, 0.96)),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06));
-  color: var(--text-contrast);
-}
-
-.hero-board::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.hero-board-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-
-.hero-board-label {
-  font-size: 0.92rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(244, 238, 229, 0.8);
-}
-
-.hero-board-code {
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(244, 238, 229, 0.92);
-}
-
-.hero-board-number {
-  margin-top: 1.5rem;
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: clamp(4rem, 10vw, 6.2rem);
-  line-height: 0.9;
-  letter-spacing: -0.06em;
-}
-
-.hero-board-copy {
-  margin-top: 0.6rem;
-  max-width: 28ch;
-  color: rgba(244, 238, 229, 0.72);
-}
-
-.hero-stack {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 1.6rem;
-}
-
-.hero-stat {
-  min-height: 110px;
-  padding: 1rem;
-  border-radius: 22px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.hero-stat span {
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.hero-stat strong {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 2rem;
-  line-height: 0.95;
-}
-
-.hero-stat-light {
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.hero-stat-dark {
-  background: rgba(243, 91, 47, 0.2);
-}
-
-.hero-stat-outline {
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: transparent;
-}
-
 .flash {
   margin-top: 1rem;
   padding: 1rem 1.15rem;
@@ -480,16 +378,10 @@ a {
   color: var(--danger);
 }
 
-.workspace-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: 1.2rem;
-  margin-top: 1.3rem;
-}
-
 .workspace-main {
   display: grid;
   gap: 1.2rem;
+  margin-top: 1.3rem;
 }
 
 .stats-grid {
@@ -662,94 +554,6 @@ a {
 .filter-pill-highlight {
   background: rgba(243, 91, 47, 0.12);
   color: var(--accent-strong);
-}
-
-.insight-rail {
-  display: grid;
-  gap: 1rem;
-  align-content: start;
-}
-
-.rail-panel {
-  animation-delay: 0.08s;
-}
-
-.rail-panel-feature {
-  background:
-    linear-gradient(160deg, rgba(17, 38, 49, 0.96), rgba(20, 65, 84, 0.94)),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.06));
-  color: var(--text-contrast);
-}
-
-.rail-panel-feature .panel-tag,
-.rail-panel-note .panel-tag {
-  background: rgba(255, 255, 255, 0.12);
-  color: inherit;
-}
-
-.rail-panel-feature p,
-.rail-panel-feature span {
-  color: rgba(244, 238, 229, 0.78);
-}
-
-.rail-panel-feature h2,
-.rail-panel-note h3 {
-  margin: 0.4rem 0 0.6rem;
-}
-
-.rail-meter {
-  margin-top: 1.2rem;
-  padding: 0.95rem 1rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.rail-meter strong {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 1.4rem;
-  text-transform: uppercase;
-}
-
-.rail-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-top: 1rem;
-}
-
-.rail-grid article {
-  min-height: 98px;
-  padding: 0.95rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.rail-grid strong {
-  font-family: "Bricolage Grotesque", sans-serif;
-  font-size: 1.8rem;
-  color: #fff6e8;
-}
-
-.rail-grid span,
-.signal-tag {
-  font-size: 0.78rem;
-}
-
-.signal-tag {
-  background: rgba(20, 34, 44, 0.06);
-  color: var(--text);
-}
-
-.rail-panel-note {
-  background:
-    linear-gradient(145deg, rgba(255, 243, 214, 0.9), rgba(255, 251, 243, 0.76)),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.18));
 }
 
 .table-header {
@@ -1061,14 +865,6 @@ tbody tr:hover {
 }
 
 @media (max-width: 1180px) {
-  .workspace-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .insight-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .stat-card:nth-child(2n) {
     transform: none;
   }
@@ -1083,10 +879,7 @@ tbody tr:hover {
   .hero,
   .stats-grid,
   .filters-grid,
-  .hero-stack,
-  .rail-grid,
-  .form-row,
-  .insight-rail {
+  .form-row {
     grid-template-columns: 1fr;
   }
 
@@ -1096,10 +889,6 @@ tbody tr:hover {
 
   .hero h1 {
     max-width: none;
-  }
-
-  .hero-board-number {
-    font-size: 4.2rem;
   }
 }
 

@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-query";
 
 import { Header } from "./components/Header";
-import { InsightRail } from "./components/InsightRail";
 import { StatsGrid } from "./components/StatsGrid";
 import { FiltersBar } from "./components/FiltersBar";
 import { UsersTable } from "./components/UsersTable";
@@ -154,75 +153,60 @@ function App() {
 
       <div className="content">
         <Header
-          isFetching={usersQuery.isFetching}
           onCreate={() => {
             setSelectedUser(null);
             setDrawerOpen(true);
           }}
-          pendingUsers={summary?.pendingUsers ?? 0}
-          totalUsers={summary?.totalUsers ?? 0}
-          visibleUsers={visibleUsers}
         />
 
         {flashMessage ? (
           <div className={`flash flash-${flashMessage.kind}`}>{flashMessage.text}</div>
         ) : null}
 
-        <section className="workspace-grid">
-          <div className="workspace-main">
-            <StatsGrid
-              activeUsers={summary?.activeUsers ?? 0}
-              pendingUsers={summary?.pendingUsers ?? 0}
-              totalUsers={summary?.totalUsers ?? 0}
-              visibleUsers={visibleUsers}
-            />
-
-            <FiltersBar
-              filters={filters}
-              searchValue={searchInput}
-              totalResults={usersQuery.data?.meta.total ?? 0}
-              onFiltersChange={(nextFilters) => updateFilters(nextFilters)}
-              onReset={() => {
-                setSearchInput("");
-                setFilters({ ...defaultFilters });
-              }}
-              onSearchChange={setSearchInput}
-            />
-
-            {usersQuery.isError ? (
-              <section className="panel error-panel">
-                <span className="panel-tag">Sistema</span>
-                <strong>No se pudo cargar la lista de usuarios.</strong>
-                <p>
-                  {usersQuery.error instanceof ApiError
-                    ? usersQuery.error.message
-                    : "Verifica la conexion al backend y a la base de datos."}
-                </p>
-              </section>
-            ) : null}
-
-            <UsersTable
-              filters={filters}
-              isFetching={usersQuery.isFetching}
-              isLoading={usersQuery.isLoading}
-              meta={usersQuery.data?.meta}
-              onDelete={(user) => setUserToDelete(user)}
-              onEdit={(user) => {
-                setSelectedUser(user);
-                setDrawerOpen(true);
-              }}
-              onPageChange={(page) => updateFilters({ page }, false)}
-              users={users}
-            />
-          </div>
-
-          <InsightRail
-            filters={filters}
-            hasError={usersQuery.isError}
-            isFetching={usersQuery.isFetching}
+        <section className="workspace-main">
+          <StatsGrid
+            activeUsers={summary?.activeUsers ?? 0}
             pendingUsers={summary?.pendingUsers ?? 0}
             totalUsers={summary?.totalUsers ?? 0}
             visibleUsers={visibleUsers}
+          />
+
+          <FiltersBar
+            filters={filters}
+            searchValue={searchInput}
+            totalResults={usersQuery.data?.meta.total ?? 0}
+            onFiltersChange={(nextFilters) => updateFilters(nextFilters)}
+            onReset={() => {
+              setSearchInput("");
+              setFilters({ ...defaultFilters });
+            }}
+            onSearchChange={setSearchInput}
+          />
+
+          {usersQuery.isError ? (
+            <section className="panel error-panel">
+              <span className="panel-tag">Sistema</span>
+              <strong>No se pudo cargar la lista de usuarios.</strong>
+              <p>
+                {usersQuery.error instanceof ApiError
+                  ? usersQuery.error.message
+                  : "Verifica la conexion al backend y a la base de datos."}
+              </p>
+            </section>
+          ) : null}
+
+          <UsersTable
+            filters={filters}
+            isFetching={usersQuery.isFetching}
+            isLoading={usersQuery.isLoading}
+            meta={usersQuery.data?.meta}
+            onDelete={(user) => setUserToDelete(user)}
+            onEdit={(user) => {
+              setSelectedUser(user);
+              setDrawerOpen(true);
+            }}
+            onPageChange={(page) => updateFilters({ page }, false)}
+            users={users}
           />
         </section>
       </div>
