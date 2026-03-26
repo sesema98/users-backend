@@ -1,9 +1,16 @@
-import { roleOptions, sortOptions, statusOptions } from "../lib/constants";
+import {
+  getRoleLabel,
+  getStatusLabel,
+  roleOptions,
+  sortOptions,
+  statusOptions
+} from "../lib/constants";
 import type { UserFilters } from "../types";
 
 interface FiltersBarProps {
   filters: UserFilters;
   searchValue: string;
+  totalResults: number;
   onSearchChange: (value: string) => void;
   onFiltersChange: (nextFilters: Partial<UserFilters>) => void;
   onReset: () => void;
@@ -12,16 +19,34 @@ interface FiltersBarProps {
 export function FiltersBar({
   filters,
   searchValue,
+  totalResults,
   onSearchChange,
   onFiltersChange,
   onReset
 }: FiltersBarProps) {
+  const activeSignals: string[] = [];
+
+  if (filters.search.trim()) {
+    activeSignals.push(`Busqueda: "${filters.search.trim()}"`);
+  }
+
+  if (filters.role !== "all") {
+    activeSignals.push(`Rol: ${getRoleLabel(filters.role)}`);
+  }
+
+  if (filters.status !== "all") {
+    activeSignals.push(`Estado: ${getStatusLabel(filters.status)}`);
+  }
+
+  activeSignals.push(filters.sortOrder === "asc" ? "Orden ascendente" : "Orden descendente");
+
   return (
     <section className="panel filters-panel">
-      <div className="panel-header">
+      <div className="filters-topline">
         <div>
-          <h2>Explorar usuarios</h2>
-          <p>Busca por nombre, apellido, correo o telefono.</p>
+          <span className="panel-tag">Precision controls</span>
+          <h2>Filtra sin perder ritmo</h2>
+          <p>Busca por nombre, apellido, correo o telefono y afina la vista.</p>
         </div>
         <button className="button button-ghost" onClick={onReset} type="button">
           Limpiar filtros
@@ -109,6 +134,19 @@ export function FiltersBar({
             <option value="asc">Ascendente</option>
           </select>
         </label>
+      </div>
+
+      <div className="filters-footer">
+        <div className="filter-pill-stack">
+          <span className="filter-pill filter-pill-highlight">
+            {totalResults} resultado{totalResults === 1 ? "" : "s"}
+          </span>
+          {activeSignals.map((signal) => (
+            <span className="filter-pill" key={signal}>
+              {signal}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );

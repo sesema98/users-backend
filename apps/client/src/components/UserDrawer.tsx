@@ -80,8 +80,9 @@ export function UserDrawer({
   return (
     <div className="overlay" role="presentation">
       <aside className="drawer">
-        <div className="panel-header">
+        <div className="drawer-hero">
           <div>
+            <span className="panel-tag">Ficha editable</span>
             <h2>{selectedUser ? "Editar usuario" : "Nuevo usuario"}</h2>
             <p>
               {selectedUser
@@ -89,9 +90,10 @@ export function UserDrawer({
                 : "Registra un nuevo usuario con validaciones basicas."}
             </p>
           </div>
-          <button className="button button-ghost" onClick={onClose} type="button">
-            Cerrar
-          </button>
+          <div className="drawer-badge">
+            <strong>{selectedUser ? "Modo ajuste" : "Modo alta"}</strong>
+            <span>Validacion inmediata antes de guardar.</span>
+          </div>
         </div>
 
         <form

@@ -21,17 +21,13 @@ export function DeleteDialog({
   return (
     <div className="overlay" role="presentation">
       <div className="dialog">
-        <div className="panel-header">
-          <div>
-            <h2>Eliminar usuario</h2>
-            <p>Esta accion elimina el registro de la tabla users.</p>
-          </div>
-        </div>
+        <span className="panel-tag">Accion critica</span>
+        <h2>Eliminar usuario</h2>
+        <p className="dialog-copy">Esta accion elimina el registro de la tabla users.</p>
 
-        <p className="dialog-copy">
-          Vas a eliminar a <strong>{getUserFullName(user)}</strong>. Esta accion no
-          se puede deshacer.
-        </p>
+        <div className="dialog-highlight">{getUserFullName(user)}</div>
+
+        <p className="dialog-copy">Esta accion no se puede deshacer.</p>
 
         <div className="drawer-actions">
           <button className="button button-ghost" onClick={onCancel} type="button">

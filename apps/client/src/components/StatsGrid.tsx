@@ -12,18 +12,42 @@ export function StatsGrid({
   visibleUsers
 }: StatsGridProps) {
   const items = [
-    { label: "Usuarios totales", value: totalUsers, tone: "sun" },
-    { label: "Usuarios activos", value: activeUsers, tone: "mint" },
-    { label: "Pendientes", value: pendingUsers, tone: "sand" },
-    { label: "En pantalla", value: visibleUsers, tone: "ink" }
+    {
+      label: "Usuarios totales",
+      value: totalUsers,
+      tone: "sun",
+      note: "Masa completa del directorio."
+    },
+    {
+      label: "Usuarios activos",
+      value: activeUsers,
+      tone: "mint",
+      note: "Perfiles listos para operar."
+    },
+    {
+      label: "Pendientes",
+      value: pendingUsers,
+      tone: "sand",
+      note: "Registros a revisar o activar."
+    },
+    {
+      label: "En pantalla",
+      value: visibleUsers,
+      tone: "ink",
+      note: "Capa visible bajo los filtros."
+    }
   ];
 
   return (
     <section className="stats-grid">
-      {items.map((item) => (
+      {items.map((item, index) => (
         <article className={`stat-card stat-card-${item.tone}`} key={item.label}>
-          <span>{item.label}</span>
+          <div className="stat-card-top">
+            <span>{item.label}</span>
+            <small>{String(index + 1).padStart(2, "0")}</small>
+          </div>
           <strong>{item.value}</strong>
+          <p>{item.note}</p>
         </article>
       ))}
     </section>

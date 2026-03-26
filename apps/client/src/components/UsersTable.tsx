@@ -17,6 +17,10 @@ function StatusPill({ label, tone }: { label: string; tone: string }) {
   return <span className={`pill pill-${tone}`}>{label}</span>;
 }
 
+function getInitials(user: Pick<User, "firstName" | "lastName">) {
+  return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+}
+
 function renderSkeletonRows() {
   return Array.from({ length: 5 }, (_, index) => (
     <tr key={`skeleton-${index}`}>
@@ -37,16 +41,29 @@ export function UsersTable({
   onDelete,
   onPageChange
 }: UsersTableProps) {
+  const currentPage = meta?.page ?? filters.page;
+  const pageSize = meta?.pageSize ?? filters.pageSize;
+  const visibleStart = users.length > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const visibleEnd = users.length > 0 ? visibleStart + users.length - 1 : 0;
+
   return (
-    <section className="panel table-panel">
-      <div className="panel-header">
+    <section className="panel table-panel" id="collection">
+      <div className="panel-header table-header">
         <div>
-          <h2>Listado</h2>
+          <span className="panel-tag">Collection</span>
+          <h2>Usuarios en escena</h2>
           <p>
-            Pagina {meta?.page ?? filters.page} de {meta?.totalPages ?? 1}
+            Pagina {currentPage} de {meta?.totalPages ?? 1}
           </p>
         </div>
-        {isFetching && !isLoading ? <span className="sync-badge">Actualizando</span> : null}
+        <div className="table-status-block">
+          {isFetching && !isLoading ? <span className="sync-badge">Actualizando</span> : null}
+          {meta ? (
+            <span className="pagination-summary">
+              Mostrando {visibleStart}-{visibleEnd} de {meta.total}
+            </span>
+          ) : null}
+        </div>
       </div>
 
       <div className="table-wrap">
@@ -64,12 +81,18 @@ export function UsersTable({
           <tbody>
             {isLoading
               ? renderSkeletonRows()
-              : users.map((user) => (
+              : users.map((user, index) => (
                   <tr key={user.id}>
                     <td>
-                      <div className="name-cell">
-                        <strong>{getUserFullName(user)}</strong>
-                        <span>{user.notes || "Sin notas registradas"}</span>
+                      <div className="identity-row">
+                        <div className="user-avatar">{getInitials(user)}</div>
+                        <div className="name-cell">
+                          <span className="row-kicker">
+                            Ficha {String((currentPage - 1) * pageSize + index + 1).padStart(2, "0")}
+                          </span>
+                          <strong>{getUserFullName(user)}</strong>
+                          <span>{user.notes || "Sin notas registradas"}</span>
+                        </div>
                       </div>
                     </td>
                     <td>
@@ -78,14 +101,23 @@ export function UsersTable({
                         <span>{user.phone || "Sin telefono"}</span>
                       </div>
                     </td>
-                    <td>{getRoleLabel(user.role)}</td>
+                    <td>
+                      <span className={`role-badge role-${user.role}`}>
+                        {getRoleLabel(user.role)}
+                      </span>
+                    </td>
                     <td>
                       <StatusPill
                         label={getStatusLabel(user.status)}
                         tone={user.status}
                       />
                     </td>
-                    <td>{formatDate(user.updatedAt)}</td>
+                    <td>
+                      <div className="date-block">
+                        <strong>{formatDate(user.updatedAt)}</strong>
+                        <span>Creado {formatDate(user.createdAt)}</span>
+                      </div>
+                    </td>
                     <td>
                       <div className="actions-inline">
                         <button
@@ -121,7 +153,7 @@ export function UsersTable({
         <div className="pagination-summary">
           {meta ? (
             <span>
-              {meta.total} resultado{meta.total === 1 ? "" : "s"}
+              {meta.total} resultado{meta.total === 1 ? "" : "s"} en esta lectura
             </span>
           ) : null}
         </div>
